@@ -50,7 +50,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
-import org.wheelerschool.robotics.config.Config;
+import org.wheelerschool.robotics.robotlib.config.Config;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,7 +59,7 @@ import java.util.Map;
 
 /**
  * =================================================================================================
- * NOTE: Make sure to set 'VUFORIA_KEY' in 'org.wheelerschool.robotics.config.Config' to your Vuforia key
+ * NOTE: Make sure to set 'VUFORIA_KEY' in 'org.wheelerschool.robotics.robotlib.config.Config' to your Vuforia key
  * =================================================================================================
  */
 
