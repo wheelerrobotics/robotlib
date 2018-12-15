@@ -49,16 +49,18 @@ public class MechanumDrive {
         thrustMotorCoeff = Solve.pinv(tmat);
     }
 
-    public FloatMatrix calcDrive(float x, float y, float rot) {
+    public FloatMatrix calc(float x, float y, float rot) {
         FloatMatrix thrustMat = new FloatMatrix(new float[]{x,y,rot});
         return this.thrustMotorCoeff.mmul(thrustMat);
     }
 
-    public void drive(float x, float y, float rot) {
-        FloatMatrix mt = calcDrive(x, y, rot);
-
+    public void drive(FloatMatrix thrust) {
         for (int i=0; i<motors.length; i++) {
-            motors[i].setPower(mt.get(i));
+            motors[i].setPower(thrust.get(i));
         }
+    }
+
+    public void calcDrive(float x, float y, float rot) {
+        drive(calc(x, y, rot));
     }
 }
