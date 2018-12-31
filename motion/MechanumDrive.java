@@ -2,19 +2,20 @@ package org.wheelerschool.robotics.robotlib.motion;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.jblas.FloatMatrix;
-import org.jblas.Solve;
+import org.firstinspires.ftc.robotcore.external.matrices.GeneralMatrixF;
+import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
+import org.wheelerschool.robotics.robotlib.matrix.SingularValueDecomposition;
 
 public class MechanumDrive {
     private DcMotor[] motors;
-    private FloatMatrix thrustMotorCoeff;
+    private GeneralMatrixF thrustMotorCoeff;
 
     public MechanumDrive(DcMotor[] motors, float[][] mpos) {
         /**
          * @param motors: List of motors
-         * @param mpos: List of [x, y, rot, horz sign]
+         * @param mpos: List of [x, y, rot, xsign]
          *
-         * NOTE: Horizontal sign corresponds to: +1 (CCW), -1 (CW)
+         * NOTE: X axis sign corresponds to: +1 (CCW), -1 (CW)
          */
         this.motors = motors;
 
@@ -30,8 +31,8 @@ public class MechanumDrive {
             throw new ArrayStoreException("Positions must be in shape '4 * motors.length'");
         }
 
-        FloatMatrix tmat = new FloatMatrix(3, this.motors.length);
-        for (int midx=0; midx<tmat.columns; midx++) {
+        GeneralMatrixF tmat = new GeneralMatrixF(3, this.motors.length);
+        for (int midx=0; midx<tmat.numCols(); midx++) {
             float[] mdata = mpos[midx];
 
             // Determine thrust angle from angle
@@ -46,15 +47,15 @@ public class MechanumDrive {
             tmat.put(2, midx, (float) (Math.cos(thrAng - perpAng) * cDist));
         }
 
-        thrustMotorCoeff = Solve.pinv(tmat);
+        thrustMotorCoeff = (GeneralMatrixF) (new SingularValueDecomposition(tmat).getSolver().getInverse());
     }
 
-    public FloatMatrix calc(float x, float y, float rot) {
-        FloatMatrix thrustMat = new FloatMatrix(new float[]{x,y,rot});
-        return this.thrustMotorCoeff.mmul(thrustMat);
+    public VectorF calc(float x, float y, float rot) {
+        VectorF thrustMat = new VectorF(x,y,rot);
+        return this.thrustMotorCoeff.multiplied(thrustMat);
     }
 
-    public void drive(FloatMatrix thrust) {
+    public void drive(VectorF thrust) {
         for (int i=0; i<motors.length; i++) {
             motors[i].setPower(thrust.get(i));
         }
