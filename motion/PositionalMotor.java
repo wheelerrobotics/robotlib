@@ -38,6 +38,9 @@ public class PositionalMotor {
     }
 
     private int updateIdx(int idx) {
+        while (idx < 0) {
+            idx += positions.length;
+        }
         currentIdx = Range.clip(idx, 0, positions.length-1);
         return currentIdx;
     }
