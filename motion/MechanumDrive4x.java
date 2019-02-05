@@ -22,10 +22,10 @@ public class MechanumDrive4x {
     public double[] updateMotors(float x, float y, float rot) {
         double scale = Math.hypot(x, y);
         double robotAngle = Math.atan2(y, x) - Math.PI / 4;
-        final double v1 = scale * Math.cos(robotAngle) + rot;
-        final double v2 = scale * Math.sin(robotAngle) - rot;
-        final double v3 = scale * Math.sin(robotAngle) + rot;
-        final double v4 = scale * Math.cos(robotAngle) - rot;
+        final double v1 = scale * Math.cos(robotAngle) - rot;
+        final double v2 = scale * Math.sin(robotAngle) + rot;
+        final double v3 = scale * Math.sin(robotAngle) - rot;
+        final double v4 = scale * Math.cos(robotAngle) + rot;
 
         /*luc is gei*/
         fLeft.setPower(v1);
