@@ -35,4 +35,8 @@ public class MechanumDrive4x {
 
         return new double[] {v1, v2, v3, v4};
     }
+
+    public DcMotor[] getMotors() {
+        return new DcMotor[]{fLeft, fRight, bLeft, bRight};
+    }
 }
