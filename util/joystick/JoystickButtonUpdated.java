@@ -38,6 +38,7 @@ public class JoystickButtonUpdated {
          */
         public boolean buttonState;
         public boolean isButtonStateNew;
+        public boolean newStateTrue;
         public boolean flipStateValue;
     }
 
@@ -57,6 +58,9 @@ public class JoystickButtonUpdated {
         } else {
             joystickButtonData.isButtonStateNew = false;
         }
+
+        // Set if value is true, and new (combination to ease use later):
+        joystickButtonData.newStateTrue = button && joystickButtonData.isButtonStateNew;
 
         // Set last button state:
         lastButtonState = button;
