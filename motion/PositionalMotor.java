@@ -57,7 +57,11 @@ public class PositionalMotor {
     }
 
     public void moveRel(int idxRel, double power) {
-        moveTo(currentIdx + idxRel, power);
+        int newIdx = currentIdx + idxRel;
+
+        if (newIdx < positions.length && newIdx >= 0 ) {
+            moveTo(newIdx, power);
+        }
     }
 
     public boolean motorActive() {
